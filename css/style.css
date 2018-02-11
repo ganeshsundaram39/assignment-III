@@ -1,0 +1,63 @@
+html,
+body {
+
+    margin: 0;
+    padding: 0;
+    
+}
+
+.navbar {
+    background-color: #4267b2;
+    height: 2.7em;
+}
+
+.navbar-logo{
+    font-size: 1.745em;
+    color: white;
+    line-height: 1em;
+}
+
+h1 {
+    text-align: center;
+    font-size: 4vmax !important;
+}
+
+.row {
+
+    align-content: flex-start;
+}
+
+
+
+
+/* Color for boxes */
+
+.box {
+    height: 25vh;
+}
+
+.box1 {
+    background-color: #2e4600;
+}
+
+.box2 {
+    background-color: #486b00;
+}
+
+.box3 {
+    background-color: #a2c523;
+}
+
+.box4 {
+    background-color: #7d4427;
+}
+
+.box5 {
+    background-color: #66a5ad;
+}
+
+@media screen and (min-width: 900px) {
+    .container {
+        width: 1000px !important;
+    }
+}

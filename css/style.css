@@ -1,9 +1,7 @@
 html,
 body {
-
     margin: 0;
     padding: 0;
-    
 }
 
 .navbar {
@@ -11,11 +9,53 @@ body {
     height: 2.7em;
 }
 
-.navbar-logo{
-    font-size: 1.745em;
-    color: white;
-    line-height: 1em;
+.navbar-container {
+    justify-content: flex-start !important;
+    flex-wrap: nowrap !important;
 }
+
+.navbar-logo a {
+    font-size: 1.66em;
+    color: white !important;
+    line-height: 1.2em;
+    padding: 0px 4px;
+    
+}
+.navbar-logo{
+  
+    transition: background-color 0.2s ease;
+}
+.navbar-logo:hover {
+    background-color: rgba(0, 0, 0, .1);
+    border-radius: 3px;
+}
+
+input[name="fbtoken"] {
+    margin-left: 0.2em;
+    width: 25em;
+    height: 1.51em;
+    border-radius: 2px;
+    font-family: serif;
+    border: 1px black;
+    padding: 0.4em;
+    color: #1d2129;
+    min-width: 1em;
+    outline:none;
+}
+
+#search{
+    margin-left:-1px;
+    height: 1.51em;
+    padding: 0 1.3em;
+    background: #fff;
+    color: #6c757d;
+    border: 0;
+    outline:none;
+    cursor: pointer;
+    transition: background-color 0.2s ease ;
+    -webkit-appearance: none;
+}
+
 
 h1 {
     text-align: center;
@@ -23,9 +63,10 @@ h1 {
 }
 
 .row {
-
-    align-content: flex-start;
+    align-content: flex-start !important;
 }
+
+
 
 
 

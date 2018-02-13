@@ -2,11 +2,16 @@ html,
 body {
     margin: 0;
     padding: 0;
+    background: #E9EBEE;
 }
 
 .navbar {
     background-color: #4267b2;
     height: 2.7em;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    top: 0;
 }
 
 .navbar-container {
@@ -56,33 +61,20 @@ input[name="fbtoken"] {
     -webkit-appearance: none;
 }
 
-
-h1 {
-    text-align: center;
-    font-size: 4vmax !important;
-}
-
 .row {
     align-content: flex-start !important;
 }
 
-
-
-
-
-
 /* Color for boxes */
-
-.box {
-    height: 25vh;
-}
 
 .box1 {
     background-color: #2e4600;
+    height: 50vh;
 }
 
 .box2 {
     background-color: #486b00;
+    height: 50vh;
 }
 
 .box3 {

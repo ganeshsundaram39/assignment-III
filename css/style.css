@@ -12,6 +12,7 @@ body {
     width: 100%;
     z-index: 1;
     top: 0;
+    border-bottom: 1px solid #495057;
 }
 
 .navbar-container {
@@ -24,12 +25,13 @@ body {
     color: white !important;
     line-height: 1.2em;
     padding: 0px 4px;
-    
 }
-.navbar-logo{
-  
+
+.navbar-logo {
+
     transition: background-color 0.2s ease;
 }
+
 .navbar-logo:hover {
     background-color: rgba(0, 0, 0, .1);
     border-radius: 3px;
@@ -45,19 +47,19 @@ input[name="fbtoken"] {
     padding: 0.4em;
     color: #1d2129;
     min-width: 1em;
-    outline:none;
+    outline: none;
 }
 
-#search{
-    margin-left:-1px;
+#search {
+    margin-left: -1px;
     height: 1.51em;
     padding: 0 1.3em;
     background: #fff;
     color: #6c757d;
     border: 0;
-    outline:none;
+    outline: none;
     cursor: pointer;
-    transition: background-color 0.2s ease ;
+    transition: background-color 0.2s ease;
     -webkit-appearance: none;
 }
 
@@ -65,11 +67,51 @@ input[name="fbtoken"] {
     align-content: flex-start !important;
 }
 
-/* Color for boxes */
+
+/* Cover Section*/
 
 .box1 {
-    background-color: #2e4600;
-    height: 50vh;
+    /*background-color: #2e4600;*/
+    height: 55vh;
+    padding: 0;
+}
+
+
+.cover-photo {
+    width: 100%;
+    height: 48.5vh;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.nav-below_cover-photo {
+    height: 6.5vh;
+    background: #fff;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 2;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.nav-below_cover-photo>ul {
+    list-style: none;
+    display: flex;
+    margin-left: 14em;
+    height: inherit;
+    margin-bottom: 0 !important;
+}
+
+.nav-below_cover-photo>ul>li {
+    border-right: 1px solid #e9eaed;
+    padding: 5px 1.5em;
+    color: #365899;
+    cursor: pointer;
+}
+
+.nav-below_cover-photo>ul>li:first-child {
+    border-left: 1px solid #e9eaed;
 }
 
 .box2 {
@@ -91,6 +133,6 @@ input[name="fbtoken"] {
 
 @media screen and (min-width: 900px) {
     .container {
-        width: 1000px !important;
+        width: 900px !important;
     }
 }

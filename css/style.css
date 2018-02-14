@@ -10,7 +10,7 @@ body {
     height: 2.7em;
     position: fixed;
     width: 100%;
-    z-index: 1;
+    z-index: 999;
     top: 0;
     border-bottom: 1px solid #495057;
 }
@@ -24,11 +24,10 @@ body {
     font-size: 1.66em;
     color: white !important;
     line-height: 1.2em;
-    padding: 0px 4px;
+    padding: 0px 0.14em;
 }
 
 .navbar-logo {
-
     transition: background-color 0.2s ease;
 }
 
@@ -63,11 +62,6 @@ input[name="fbtoken"] {
     -webkit-appearance: none;
 }
 
-.row {
-    align-content: flex-start !important;
-}
-
-
 /* Cover Section*/
 
 .box1 {
@@ -76,6 +70,29 @@ input[name="fbtoken"] {
     padding: 0;
 }
 
+#header-section {
+    position: relative;
+}
+
+#profile-pic {
+    position: absolute;
+    z-index: 1;
+    width: 10.64em;
+    height: 10.64em;
+    left: 1em;
+    bottom: 0.9em;
+}
+
+#full-name {
+    position: absolute;
+    z-index: 1;
+    bottom: 2em;
+    left: 8.47em;
+    font-size: 1.5em;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 0 3px rgba(0, 0, 0, .8);
+}
 
 .cover-photo {
     width: 100%;
@@ -88,7 +105,7 @@ input[name="fbtoken"] {
     height: 6.5vh;
     background: #fff;
     font-family: Helvetica, Arial, sans-serif;
-    font-size: 15px;
+    font-size: 0.938em;
     font-weight: bold;
     line-height: 2;
     border-bottom-left-radius: 4px;
@@ -99,7 +116,9 @@ input[name="fbtoken"] {
     list-style: none;
     display: flex;
     margin-left: 14em;
+    padding-left: 0;
     height: inherit;
+
     margin-bottom: 0 !important;
 }
 
@@ -110,8 +129,23 @@ input[name="fbtoken"] {
     cursor: pointer;
 }
 
-.nav-below_cover-photo>ul>li:first-child {
+#timeline {
     border-left: 1px solid #e9eaed;
+    color: #4b4f56;
+}
+
+.nav-pointer {
+    width: 1.1em;
+    height: 0.6em;
+    display: block;
+    position: relative;
+    left: 1.5em;
+    bottom: 0.1em;
+}
+
+#about img {
+    left: 1em;
+    display: none;
 }
 
 .box2 {
@@ -133,6 +167,29 @@ input[name="fbtoken"] {
 
 @media screen and (min-width: 900px) {
     .container {
-        width: 900px !important;
+        width: 56.3em !important;
+    }
+}
+
+@media screen and (max-width: 576px) {
+
+    #profile-pic {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto auto;
+    }
+
+    #full-name {
+        left: 0;
+        right: 0;
+        margin: auto;
+        text-align: center;
+    }
+
+    .nav-below_cover-photo>ul{
+        justify-content: space-around;
+        margin-left: 0;
     }
 }

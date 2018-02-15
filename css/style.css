@@ -72,6 +72,7 @@ input[name="fbtoken"] {
 
 #header-section {
     position: relative;
+    overflow: hidden;
 }
 
 #profile-pic {
@@ -140,7 +141,7 @@ input[name="fbtoken"] {
     display: block;
     position: relative;
     left: 1.5em;
-    bottom: 0.1em;
+    bottom: 0.2em;
 }
 
 #about img {

@@ -62,6 +62,7 @@ input[name="fbtoken"] {
     -webkit-appearance: none;
 }
 
+
 /* Cover Section*/
 
 .box1 {
@@ -73,6 +74,7 @@ input[name="fbtoken"] {
 #header-section {
     position: relative;
     overflow: hidden;
+    border: 1px solid #d3d6db;
 }
 
 #profile-pic {
@@ -141,7 +143,7 @@ input[name="fbtoken"] {
     display: block;
     position: relative;
     left: 1.5em;
-    bottom: 0.2em;
+    bottom: 0.1em;
 }
 
 #about img {
@@ -150,12 +152,41 @@ input[name="fbtoken"] {
 }
 
 .box2 {
-    background-color: #486b00;
-    height: 50vh;
+    /*background-color: #486b00;*/
+    /*height: 60vh;*/
+    padding: 0;
+    background: #E9EBEE;
+}
+
+#intro {
+    margin-top: 0.7em;
+    border-radius: 3px;
+    border: 1px solid #d3d6db;
+    background: #fff;
+    padding-top: 0.94em;
 }
 
 .box3 {
-    background-color: #a2c523;
+    /* background-color: #a2c523;*/
+    background-color: #e9ebee;
+    padding: 0;
+}
+
+.box3>.container-fluid {
+    padding: 0;
+}
+
+.box3>.container-fluid>.row {
+    margin-left: 0.7em;
+    margin-right: 0;
+}
+
+#posts {
+    margin-top: 0.7em;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #d3d6db;
+    padding-top: 0.94em;
 }
 
 .box4 {
@@ -189,8 +220,14 @@ input[name="fbtoken"] {
         text-align: center;
     }
 
-    .nav-below_cover-photo>ul{
+    .nav-below_cover-photo>ul {
         justify-content: space-around;
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 770px) {
+    .box3>.container-fluid>.row {
         margin-left: 0;
     }
 }

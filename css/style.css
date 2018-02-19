@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     background: #E9EBEE;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
 .navbar {
@@ -63,6 +64,8 @@ input[name="fbtoken"] {
 }
 
 
+
+
 /* Cover Section*/
 
 .box1 {
@@ -75,6 +78,7 @@ input[name="fbtoken"] {
     position: relative;
     overflow: hidden;
     border: 1px solid #d3d6db;
+    border-radius: 4px;
 }
 
 #profile-pic {
@@ -100,19 +104,15 @@ input[name="fbtoken"] {
 .cover-photo {
     width: 100%;
     height: 48.5vh;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
 }
 
 .nav-below_cover-photo {
     height: 6.5vh;
     background: #fff;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: inherit;
     font-size: 0.938em;
     font-weight: bold;
     line-height: 2;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
 }
 
 .nav-below_cover-photo>ul {
@@ -164,6 +164,38 @@ input[name="fbtoken"] {
     border: 1px solid #d3d6db;
     background: #fff;
     padding-top: 0.94em;
+    font-size: 0.9em;
+    font-family: inherit;
+}
+
+#intro>p:first-child {
+    font-size: 1.1em;
+}
+
+.website-link {
+    border: 1px solid #dddfe2;
+    border-radius: 4px;
+    padding: 0.4em;
+    display: inline-block;
+    color: #90949c !important;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    word-break: break-all;
+    font-size: 0.85em;
+}
+
+.website-link>i {
+    margin-left: 2px;
+}
+
+.website-link>a {
+    text-decoration: none;
+    color: grey;
+}
+
+p.website-link:hover {
+    border-color: #90949c;
 }
 
 .box3 {
@@ -181,14 +213,54 @@ input[name="fbtoken"] {
     margin-right: 0;
 }
 
-#posts {
-    margin-top: 0.7em;
+.posts {
+    margin-top: 0.6em;
     background: #fff;
     border-radius: 3px;
     border: 1px solid #d3d6db;
-    padding-top: 0.94em;
+    padding-top: 0.74em;
+    padding-left: 0.74em;
+    font-family: inherit;
 }
 
+.post-header {
+    line-height: 1.4;
+    font-size: 0.9em;
+}
+
+.post-header>img {
+    float: left;
+    margin-right: 7px;
+}
+
+.user-name>a {
+    color: #365899;
+    font-weight: bold;
+    text-decoration-color: #365899;
+}
+
+.joiner {
+    color: #90949c;
+}
+
+.created-time {
+    color: #90949c;
+    font-size: 0.9em;
+        margin-left: 47px;
+}
+
+.post-url>a {
+    color: #365899;
+    text-decoration-color: #365899;
+}
+
+.videos{
+
+    width: inherit;
+    height: inherit;
+    margin: 10px 0;
+
+}
 .box4 {
     background-color: #7d4427;
 }

@@ -6,6 +6,10 @@ body {
     font-family: Helvetica, Arial, sans-serif;
 }
 
+a {
+    outline: none;
+}
+
 .navbar {
     background-color: #4267b2;
     height: 2.7em;
@@ -62,9 +66,6 @@ input[name="fbtoken"] {
     transition: background-color 0.2s ease;
     -webkit-appearance: none;
 }
-
-
-
 
 /* Cover Section*/
 
@@ -218,14 +219,14 @@ p.website-link:hover {
     background: #fff;
     border-radius: 3px;
     border: 1px solid #d3d6db;
-    padding-top: 0.74em;
-    padding-left: 0.74em;
+    padding: 0.74em 0 0.74em 0.74em;
     font-family: inherit;
 }
 
 .post-header {
     line-height: 1.4;
     font-size: 0.9em;
+    color: #90949c;
 }
 
 .post-header>img {
@@ -234,33 +235,55 @@ p.website-link:hover {
 }
 
 .user-name>a {
-    color: #365899;
+    color: #365899 !important;
     font-weight: bold;
-    text-decoration-color: #365899;
+    text-decoration-color: #365899 !important;
 }
 
-.joiner {
-    color: #90949c;
+.post-url>a {
+    color: #365899 !important;
+    text-decoration-color: #365899 !important;
 }
 
 .created-time {
     color: #90949c;
     font-size: 0.9em;
-        margin-left: 47px;
+    margin-left: 3.7em;
 }
 
-.post-url>a {
-    color: #365899;
-    text-decoration-color: #365899;
+
+/* Modal animation tweak */
+
+.fade {
+    opacity: 0;
+    -webkit-transition: opacity 1s linear;
+    transition: opacity 1s linear;
 }
 
-.videos{
+.modal-title {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #1d2129;
+}
+
+.modal-body>a {
+    color: #1d2129;
+    font-weight: bold;
+    text-decoration-color: #1d2129 !important;
+}
+
+span.friends {
+    margin-left: 0.7em;
+    color: #1d2129 !important;
+}
+
+.videos {
 
     width: inherit;
     height: inherit;
     margin: 10px 0;
-
 }
+
 .box4 {
     background-color: #7d4427;
 }

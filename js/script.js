@@ -1,4 +1,3 @@
-
 // DataStore For storing User Data
 var userData = (function() {
 
@@ -120,7 +119,7 @@ function assignDataToIntroUI() {
             introNewHtml(html, initials, id, name);
         });
 
-        // Filtering High School of user
+        // Filtering High School of USER
         var highSchool = dataStore.education.filter(function(highSchool) {
             return highSchool.type === 'High School';
         });
@@ -178,10 +177,7 @@ function assignDataToIntroUI() {
         id = dataStore.website;
 
         // Formating url for display
-        name = id.replace('https://', '');
-        name = name.replace('http://', '');
-        name = name.replace('www.', '');
-        name = name.slice(0, -1);
+        name = formatUrl(id);
 
         introNewHtml(html, '', id, name);
     }
@@ -203,50 +199,124 @@ function introNewHtml(html, initials, id, name) {
 // Assign data to Post section
 function assignDataToPostUI() {
 
-    var dataStore, html, story;
+    var dataStore, html, story, tags_modal, modal_body = '';
 
     // Reading data from userData 
     dataStore = userData.getUserData();
 
-    // Reset Posts 
+    // Reset container 
     $('.box3 .container-fluid .row').html('');
 
+    // Retrieving each Post by user
     $.each(dataStore.post_data, function(index, post) {
 
         html = " <div class='col-12 col-sm-12 col-md-12 posts'><div class='post-header'><img src='" + dataStore.profilePicSmall + "' class='rounded-circle' width='40' height='40'>";
 
         story = post.story;
-        if (story) {
 
+        // Header Section (Story, tags, location, created time)
+
+        if (story) { // Check if user has a Story
+
+            // Story section
+
+            // Post begins with username
             html += story.replace(dataStore.name, '<span class="user-name"><a target="_blank" href="https://www.facebook.com/' + dataStore.id + '">' + dataStore.name + '</a></span>');
 
-            if (story.indexOf("shared") != -1) {
+            if (story.indexOf("shared") != -1) { // Check if user has shared something
 
-                $.each(post.story_tags, function(index, value) {
-                    if (index === 1) {
+                $.each(post.story_tags, function(index, value) { // Get story tag(Page name) and replace with anchor tag
+
+                    if (index === 1) { // index 1 contains name and id of the page
 
                         html = html.replace(value.name, '<span class="post-url"><a target="_blank" href="https://www.facebook.com/' + value.id + '">' + value.name + '</a></span>');
-                        return false;
+                        return false; // break from the loop
                     }
                 });
 
+                // Replace video or link in story with anchor tag(url to video and link of OP)
                 $.each(['video', 'link'], function(index, value) {
                     html = html.replace(value, '<span class="post-url"><a target="_blank" href="' + post.link + '">' + value + '</a></span>');
                 });
-                
-            } else if (story.indexOf("is with") != -1) {
 
-            	html = html.replace(post.with_tags.data[0].name, '<span class="post-url"><a target="_blank" href="https://www.facebook.com/' + post.with_tags.data[0].id + '">' + post.with_tags.data[0].name + '</a></span>');
+            } else if (story.indexOf("is with") != -1) { // Check if user is with someone(tagged)
+
+                // Replace the first tagged friend with anchor tag
+                html = html.replace(post.with_tags.data[0].name, '<span class="post-url"><a target="_blank" href="https://www.facebook.com/' + post.with_tags.data[0].id + '">' + post.with_tags.data[0].name + '</a></span>');
+
+                if (post.with_tags.data.length > 1) { // Check if there are more than one tagged friends
+
+                    // Replace the n others text with a link (where n is number of friends)
+                    html = html.replace(post.with_tags.data.length - 1 + ' others', '<span class="post-url"><a  data-toggle="modal" href="#' + post.id + '-modal">' + (post.with_tags.data.length - 1) + ' others' + '</a>%tag-list%</span>');
+
+                    // Show a modal when user clicks (n others) link 
+                    tags_modal = '<!-- The Modal --><div class="modal fade" id="' + post.id + '-modal"><div class="modal-dialog modal-md"><div class="modal-content"><!-- Modal Header --><div class="modal-header"><h4 class="modal-title">People</h4><button type="button" class="close" data-dismiss="modal">&times;</button></div><!-- Modal body --><div class="modal-body">%tagged-people%</div></div></div></div>';
+
+                    // Fetch friends and display their profile pic and name
+                    $.each(post.with_tags.data, function(index, value) {
+                        if (index > 0) {
+                            modal_body += '<a target="_blank" href="https://www.facebook.com/' + value.id + '"><img class="rounded-circle" width="50" height="50" src="https://graph.facebook.com/' + value.id + '/picture?type=small"><span class="friends">' + value.name + '</span></a>';
+                            if (index < (post.with_tags.data.length - 1)) {
+                                modal_body += '<hr>';
+                            }
+                        }
+                    });
+
+                    // Insert modal body into modal
+                    tags_modal = tags_modal.replace('%tagged-people%', modal_body);
+
+                    // Insert modal into html
+                    html = html.replace('%tag-list%', tags_modal);
+                }
+            } else if (story.indexOf("is in") != -1) { // Check if user is in some location
+
+                // loop through story-tags
+                $.each(post.story_tags, function(index, value) {
+
+                    // index 1 has location
+                    if (index === 1) {
+
+                        // replace location with anchor tag
+                        html = html.replace(value.name, '<span class="post-url"><a target="_blank" href="https://www.facebook.com/' + value.id + '">' + value.name + '</a></span>');
+
+                        return false; // break the loop
+                    }
+                });
             }
         } else {
+
+            // if there is no story then simply display the user name 
             html += '<span class="user-name"><a target="_blank" href="https://www.facebook.com/' + dataStore.id + '">' + dataStore.name + '</a></span>';
         }
 
-        $('.box3 .container-fluid .row').append(html);
+        // Created time section
+        html += '<div class="created-time">' + formatDate(post.created_time) + '</div>';
+
+        $('.box3 .container-fluid .row').append('</div>' + html);
     });
 
 }
 
+// Data Formating Section
+function formatDate(date) {
+    var formatedDate, months;
+
+    months = { '01': 'January', '02': 'February', '03': 'March', '04': 'April', '05': 'May', '06': 'June', '07': 'July', '08': 'August', '09': 'September', '10': 'October', '11': 'November', '12': 'December' };
+
+    // Split from T and - and then reverse to get dd mm yyyy format array
+    formatedDate = date.split('T')[0].split('-').reverse();
+
+    // Get the month and convert it into word format
+    formatedDate[1] = months[formatedDate[1]];
+
+    return formatedDate.join(' '); // Join the array using space
+}
+
+function formatUrl(id) {
+    // Replace https://, http://, www., with space and remove character / in the end of url using slice.
+    return id.replace('https://', '').replace('http://', '').replace('www.', '').slice(0, -1);
+
+}
 
 // USER INTERFACE EVENTS
 function userPressesEnterKey(e) {
@@ -315,5 +385,7 @@ $(document).ready(function() {
     userInterfaceAnimation();
     $('#search').click(userClicksSearchButton);
     $('input[name="fbtoken').keypress(userPressesEnterKey);
+
+
 
 });

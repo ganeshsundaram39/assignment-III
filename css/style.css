@@ -219,7 +219,7 @@ p.website-link:hover {
     background: #fff;
     border-radius: 3px;
     border: 1px solid #d3d6db;
-    padding: 0.74em 0 0.74em 0.74em;
+    padding: 0.74em 0.74em 0.74em 0.74em;
     font-family: inherit;
 }
 
@@ -248,7 +248,7 @@ p.website-link:hover {
 .created-time {
     color: #90949c;
     font-size: 0.9em;
-    margin-left: 3.7em;
+    margin-left: 3.3em;
 }
 
 
@@ -277,20 +277,40 @@ span.friends {
     color: #1d2129 !important;
 }
 
+/*message*/
+
+.message {
+    font-size:1em;
+    font-family: inherit;
+    margin:0.8em 0 0 0;
+    color:#1d2129; 
+    line-height: 1.38;
+
+}
+
+.status{
+    font-size:1.5em !important;
+    margin:0.5em 0 0 0 !important;
+}
+
 .videos {
-
-    width: inherit;
-    height: inherit;
-    margin: 10px 0;
+  margin: 0.6em 0 0 0;
 }
 
-.box4 {
-    background-color: #7d4427;
+.photos{
+    width:inherit;
+    height:inherit;
+     margin: 0.6em 0 0 0;
 }
 
-.box5 {
-    background-color: #66a5ad;
+.appreciated-by{
+    margin-top: 0.74em;
+    padding: 10px 0;
+    border-top: 1px solid #e1e2e3;
+    border-bottom: 1px solid #e1e2e3;
 }
+
+
 
 @media screen and (min-width: 900px) {
     .container {

@@ -45,7 +45,7 @@ function getFacebookData(facebookToken) {
             // Assigning data to Post UI
             assignDataToPostUI();
         },
-        error: function(response, errorType, errorMessage) {
+        error: function(response) {
             // Error Message
             console.log(response);
             alert('Incorrect or Expired Access Token Searched..!!');
@@ -199,7 +199,8 @@ function introNewHtml(html, initials, id, name) {
 // Assign data to Post section
 function assignDataToPostUI() {
 
-    var dataStore, html, story, tags_modal, modal_body = '';
+    var dataStore, html, story, tags_modal, modal_body = '',
+        likes, likes_modal;
 
     // Reading data from userData 
     dataStore = userData.getUserData();
@@ -254,12 +255,16 @@ function assignDataToPostUI() {
 
                     // Fetch friends and display their profile pic and name
                     $.each(post.with_tags.data, function(index, value) {
-                        if (index > 0) {
+
+                        if (index > 0) { // get all friends except first one
+
                             modal_body += '<a target="_blank" href="https://www.facebook.com/' + value.id + '"><img class="rounded-circle" width="50" height="50" src="https://graph.facebook.com/' + value.id + '/picture?type=small"><span class="friends">' + value.name + '</span></a>';
-                            if (index < (post.with_tags.data.length - 1)) {
+
+                            if (index < (post.with_tags.data.length - 1)) { // add hr tag except last one
                                 modal_body += '<hr>';
                             }
                         }
+
                     });
 
                     // Insert modal body into modal
@@ -289,9 +294,73 @@ function assignDataToPostUI() {
             html += '<span class="user-name"><a target="_blank" href="https://www.facebook.com/' + dataStore.id + '">' + dataStore.name + '</a></span>';
         }
 
-        // Created time section
-        html += '<div class="created-time">' + formatDate(post.created_time) + '</div>';
+        // Created-time section
+        html += '</div><div class="created-time">' + formatDate(post.created_time) + '</div>';
 
+        // MESSAGE SECTION
+        if (post.message) {
+            html += '<pre class="message">' + post.message + '</pre>';
+        }
+
+        if (post.type) {
+
+            if (post.type === 'video') {
+
+                if (post.source) {
+                    if (post.source.indexOf('youtube') === -1) {
+                        // using Bootstrap classes to make video and youtube video responsive
+                        html += '<div class="embed-responsive embed-responsive-16by9 videos"><video controls loop  muted class=" embed-responsive-item"><source src="' + post.source + '" type="video/mp4"> Your browser does not support the video tag.</video>';
+                    } else {
+                        html += '<div class="embed-responsive embed-responsive-16by9 videos"><iframe class="embed-responsive-item" src="' + post.source.replace('?autoplay=1', '') + '"   allowfullscreen></iframe></div>';
+                    }
+                }
+            } else if (post.type === 'photo') {
+
+                html += '<img class="photos img-fluid" src="' + post.full_picture + '">';
+
+            } else if (post.type === 'link') {
+                if (post.full_picture) {
+                    html += '<img class="photos img-fluid" src="' + post.full_picture + '">';
+
+                }
+                if(post.link){
+                	html+='<div><a target="_blank" href="'+post.link+'">'+formatUrl(post.link)+'</a></div>';
+                }
+
+            } else if (post.type === 'status') {
+                html = html.replace('class="message"','class="message status"');
+            }
+        }
+
+        if (post.likes) {
+            if (post.likes.data.length > 1) {
+
+                modal_body = '';
+
+                likes = (post.likes.data.length - 1 === 1) ? post.likes.data.length - 1 + ' other' : post.likes.data.length - 1 + ' others';
+                html += '<div class="appreciated-by"><i class="fas fa-thumbs-up"></i><a data-toggle="modal" href="#' + post.id + '-likes"> ' + post.likes.data[0].name + ' and ' + likes + '</a>%liked-list%</div>';
+
+                // Show a modal when user clicks (n others) link 
+                likes_modal = '<!-- The Modal --><div class="modal fade" id="' + post.id + '-likes"><div class="modal-dialog modal-md"><div class="modal-content"><!-- Modal Header --><div class="modal-header"><h4 class="modal-title">' + post.likes.data.length + ' likes</h4><button type="button" class="close" data-dismiss="modal">&times;</button></div><!-- Modal body --><div class="modal-body">%liked-by%</div></div></div></div>';
+
+                $.each(post.likes.data, function(index, value) {
+                    modal_body += '<a target="_blank" href="https://www.facebook.com/' + value.id + '"><img class="rounded-circle" width="50" height="50" src="https://graph.facebook.com/' + value.id + '/picture?type=small"><span class="friends">' + value.name + '</span></a>';
+
+                    if (index < (post.likes.data.length - 1)) { // add hr tag except last one
+                        modal_body += '<hr>';
+                    }
+                });
+
+                likes_modal = likes_modal.replace('%liked-by%', modal_body);
+
+                html = html.replace('%liked-list%', likes_modal);
+            } else {
+                html += '<div class="appreciated-by"><i class="fas fa-thumbs-up"></i><a target="_blank" href="https://www.facebook.com/' + post.likes.data[0].id + '"> ' + post.likes.data[0].name + '</a></div>';
+
+            }
+        }
+
+        // Append HTML in the container
         $('.box3 .container-fluid .row').append('</div>' + html);
     });
 
@@ -313,6 +382,7 @@ function formatDate(date) {
 }
 
 function formatUrl(id) {
+
     // Replace https://, http://, www., with space and remove character / in the end of url using slice.
     return id.replace('https://', '').replace('http://', '').replace('www.', '').slice(0, -1);
 
@@ -363,29 +433,16 @@ function userInterfaceAnimation() {
         $('#timeline').css({ 'color': '#365899' });
     });
 
-    $('.videos').hover(function toggleControls() {
-        if (this.hasAttribute("controls")) {
-            this.removeAttribute("controls");
-        } else {
-            this.setAttribute("controls", "controls");
-        }
-    });
-
-    // When the 'ended' event fires
-    $('.videos').on('ended', function() {
-
-        // And play again
-        $('.videos').trigger('play');
-        $('.videos').trigger('pause');
-    });
 }
 
 $(document).ready(function() {
 
+    // Chrome extension errors 
+    console.log('%c Hi!', 'color: red;font-size:7em');
+    console.log('%c Use incognito mode to avoid chrome extension errors.', 'color: red;font-size:2em');
+
     userInterfaceAnimation();
     $('#search').click(userClicksSearchButton);
     $('input[name="fbtoken').keypress(userPressesEnterKey);
-
-
 
 });

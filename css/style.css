@@ -10,6 +10,10 @@ a {
     outline: none;
 }
 
+
+
+/*navigation bar */
+
 .navbar {
     background-color: #4267b2;
     height: 2.7em;
@@ -67,6 +71,8 @@ input[name="fbtoken"] {
     -webkit-appearance: none;
 }
 
+
+
 /* Cover Section*/
 
 .box1 {
@@ -107,6 +113,10 @@ input[name="fbtoken"] {
     height: 48.5vh;
 }
 
+
+
+/*navigation below cover photo*/
+
 .nav-below_cover-photo {
     height: 6.5vh;
     background: #fff;
@@ -122,7 +132,6 @@ input[name="fbtoken"] {
     margin-left: 14em;
     padding-left: 0;
     height: inherit;
-
     margin-bottom: 0 !important;
 }
 
@@ -151,6 +160,11 @@ input[name="fbtoken"] {
     left: 1em;
     display: none;
 }
+
+
+
+
+/*intro section */
 
 .box2 {
     /*background-color: #486b00;*/
@@ -198,6 +212,10 @@ input[name="fbtoken"] {
 p.website-link:hover {
     border-color: #90949c;
 }
+
+
+
+/*post section css*/
 
 .box3 {
     /* background-color: #a2c523;*/
@@ -252,13 +270,8 @@ p.website-link:hover {
 }
 
 
-/* Modal animation tweak */
 
-.fade {
-    opacity: 0;
-    -webkit-transition: opacity 1s linear;
-    transition: opacity 1s linear;
-}
+/* Modal */
 
 .modal-title {
     font-size: 1rem;
@@ -277,33 +290,47 @@ span.friends {
     color: #1d2129 !important;
 }
 
-/*message*/
 
-.message {
-    font-size:1em;
-    font-family: inherit;
-    margin:0.8em 0 0 0;
-    color:#1d2129; 
-    line-height: 1.38;
 
+/* Modal animation tweak */
+
+.fade {
+    opacity: 0;
+    -webkit-transition: opacity 1s linear;
+    transition: opacity 1s linear;
 }
 
-.status{
-    font-size:1.5em !important;
-    margin:0.5em 0 0 0 !important;
+
+
+/* message */
+
+.message {
+    font-size: 1em;
+    font-family: inherit;
+    margin: 0.8em 0 0 0;
+    color: #1d2129;
+    line-height: 1.38;
+}
+
+
+/* status, videos, photos, liked-by*/
+
+.status {
+    font-size: 1.5em !important;
+    margin: 0.5em 0 0 0 !important;
 }
 
 .videos {
-  margin: 0.6em 0 0 0;
+    margin: 0.6em 0 0 0;
 }
 
-.photos{
-    width:inherit;
-    height:inherit;
-     margin: 0.6em 0 0 0;
+.photos {
+    width: inherit;
+    height: inherit;
+    margin: 0.6em 0 0 0;
 }
 
-.appreciated-by{
+.appreciated-by {
     margin-top: 0.74em;
     padding: 10px 0;
     border-top: 1px solid #e1e2e3;
@@ -311,6 +338,7 @@ span.friends {
 }
 
 
+/* Media Queries*/
 
 @media screen and (min-width: 900px) {
     .container {
@@ -320,6 +348,7 @@ span.friends {
 
 @media screen and (max-width: 576px) {
 
+    /* Centering the profile pic*/
     #profile-pic {
         top: 0;
         bottom: 0;
@@ -338,6 +367,10 @@ span.friends {
     .nav-below_cover-photo>ul {
         justify-content: space-around;
         margin-left: 0;
+    }
+    
+    .nav-below_cover-photo>ul>li {
+        border-left: 1px solid #e9eaed;
     }
 }
 

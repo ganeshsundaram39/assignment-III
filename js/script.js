@@ -18,7 +18,7 @@ var userData = (function() {
 // Fetching FACEBOOK DATA using JQuery AJAX
 function getFacebookData(facebookToken) {
 
-    $.ajax('https://graph.facebook.com/me?fields=id,name,cover,work,education,location,relationship_status,hometown,website,posts{created_time,type,full_picture,story,story_tags,message,source,likes,comments,with_tags,link}&access_token=' + facebookToken, {
+    $.ajax('https://graph.facebook.com/me?fields=id,name,cover,work,education,location,relationship_status,birthday,hometown,website,posts{created_time,type,full_picture,story,story_tags,message,source,likes,comments,with_tags,link}&access_token=' + facebookToken, {
 
         success: function(response) {
 
@@ -34,6 +34,7 @@ function getFacebookData(facebookToken) {
                 location: response.location,
                 relationship_status: response.relationship_status,
                 hometown: response.hometown,
+                birthday:response.birthday,
                 website: response.website,
                 post_data: response.posts.data
             });
@@ -46,6 +47,7 @@ function getFacebookData(facebookToken) {
             assignDataToPostUI();
         },
         error: function(response) {
+           
             // Error Message
             console.log(response);
             alert('Incorrect or Expired Access Token Searched..!!');
@@ -169,6 +171,17 @@ function assignDataToIntroUI() {
         introNewHtml(html, initials, id, name);
     }
 
+    // Birthday Section
+    if (dataStore.birthday) { // check if user's birthday date is present
+
+        html = '<p> <i class="fas fa-birthday-cake" style="margin: 0 3px;"></i> %initials% </p>';
+
+        initials = dataStore.birthday;
+        
+
+        introNewHtml(html, initials);
+    }
+
     // Website section
     if (dataStore.website) { // Check if user website url exist
 
@@ -264,7 +277,6 @@ function assignDataToPostUI() {
                                 modal_body += '<hr>';
                             }
                         }
-
                     });
 
                     // Insert modal body into modal
@@ -301,37 +313,43 @@ function assignDataToPostUI() {
         if (post.message) {
             html += '<pre class="message">' + post.message + '</pre>';
         }
-
+        
+        // video, photos, link and status
         if (post.type) {
 
             if (post.type === 'video') {
 
                 if (post.source) {
                     if (post.source.indexOf('youtube') === -1) {
+
                         // using Bootstrap classes to make video and youtube video responsive
-                        html += '<div class="embed-responsive embed-responsive-16by9 videos"><video controls loop  muted class=" embed-responsive-item"><source src="' + post.source + '" type="video/mp4"> Your browser does not support the video tag.</video>';
+                        html += '<div class="embed-responsive embed-responsive-16by9 videos"><video controls loop autoplay muted class=" embed-responsive-item"><source src="' + post.source + '" type="video/mp4"> Your browser does not support the video tag.</video></div>';
                     } else {
+
                         html += '<div class="embed-responsive embed-responsive-16by9 videos"><iframe class="embed-responsive-item" src="' + post.source.replace('?autoplay=1', '') + '"   allowfullscreen></iframe></div>';
                     }
                 }
             } else if (post.type === 'photo') {
 
                 html += '<img class="photos img-fluid" src="' + post.full_picture + '">';
-
             } else if (post.type === 'link') {
+                
                 if (post.full_picture) {
+                    
                     html += '<img class="photos img-fluid" src="' + post.full_picture + '">';
-
                 }
                 if(post.link){
-                	html+='<div><a target="_blank" href="'+post.link+'">'+formatUrl(post.link)+'</a></div>';
+                	
+                    html+='<div style="word-wrap: break-word;"><a target="_blank" href="'+post.link+'">'+formatUrl(post.link)+'</a></div>';
                 }
 
             } else if (post.type === 'status') {
+              
                 html = html.replace('class="message"','class="message status"');
             }
         }
-
+        
+        // likes section
         if (post.likes) {
             if (post.likes.data.length > 1) {
 
@@ -342,7 +360,8 @@ function assignDataToPostUI() {
 
                 // Show a modal when user clicks (n others) link 
                 likes_modal = '<!-- The Modal --><div class="modal fade" id="' + post.id + '-likes"><div class="modal-dialog modal-md"><div class="modal-content"><!-- Modal Header --><div class="modal-header"><h4 class="modal-title">' + post.likes.data.length + ' likes</h4><button type="button" class="close" data-dismiss="modal">&times;</button></div><!-- Modal body --><div class="modal-body">%liked-by%</div></div></div></div>';
-
+                
+                // fetch all the friends who liked the post
                 $.each(post.likes.data, function(index, value) {
                     modal_body += '<a target="_blank" href="https://www.facebook.com/' + value.id + '"><img class="rounded-circle" width="50" height="50" src="https://graph.facebook.com/' + value.id + '/picture?type=small"><span class="friends">' + value.name + '</span></a>';
 
@@ -350,13 +369,15 @@ function assignDataToPostUI() {
                         modal_body += '<hr>';
                     }
                 });
-
+                
+                // insert modal body with friends who liked the post
                 likes_modal = likes_modal.replace('%liked-by%', modal_body);
-
+                
+                // insert modal into html
                 html = html.replace('%liked-list%', likes_modal);
             } else {
+              
                 html += '<div class="appreciated-by"><i class="fas fa-thumbs-up"></i><a target="_blank" href="https://www.facebook.com/' + post.likes.data[0].id + '"> ' + post.likes.data[0].name + '</a></div>';
-
             }
         }
 
@@ -412,7 +433,8 @@ function userClicksSearchButton() {
 
 // USER INTERFACE ANIMATIONs
 function userInterfaceAnimation() {
-
+    
+    // changes color of search button when user clicks on search txtbox
     $('input[name="fbtoken"]').focus(function() {
         $('#search').css({ 'background-color': '#4080ff', 'color': '#fff' });
     });
@@ -420,6 +442,7 @@ function userInterfaceAnimation() {
         $('#search').css({ 'background-color': '#fff', 'color': '#6c757d' });
     });
 
+    // changes color and shows image when user clicks on navbar below cover photo
     $('#timeline').click(function() {
         $('#about img').css({ 'display': 'none' });
         $('#timeline img').css({ 'display': 'block' });
@@ -442,7 +465,9 @@ $(document).ready(function() {
     console.log('%c Use incognito mode to avoid chrome extension errors.', 'color: red;font-size:2em');
 
     userInterfaceAnimation();
+
     $('#search').click(userClicksSearchButton);
+    
     $('input[name="fbtoken').keypress(userPressesEnterKey);
 
 });
